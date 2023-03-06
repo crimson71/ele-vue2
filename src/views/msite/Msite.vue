@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import HeaderTop from '@/components/header/Header.vue'
 import ShopList from '@/components/common/ShopList.vue'
 import FooterBottom from '@/components/footer/Footer.vue'
@@ -44,6 +45,7 @@ import { msiteFoodType, guessCity } from '@/service/getData.js'
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 
 import "swiper/css/swiper.min.css";
+import {msiteAddress} from '@/service/getData.js'
 
 
 
@@ -80,6 +82,13 @@ export default {
     } else {
       this.geohash = this.$route.query.geohash
     }
+    const {data} =  await msiteAddress(this.geohash)
+    
+    this.msiteTitle = data.name
+    const latitude = '28.15894'
+    const longitude = '112.986899'
+    this.RECORD_ADDRESS({latitude,longitude})
+    
   },
   mounted() {
     this.getFoodType(this.geohash)
@@ -87,6 +96,7 @@ export default {
    
   },
   computed:{
+    // 初始化swiper
     customswiper() {
       let swiper = this.$refs.mySwiper.$swiper
       console.log(this.foodType,'this.foodType');
@@ -95,6 +105,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+    'RECORD_ADDRESS',
+
+    ]),
     async getFoodType(geohash) {
       const { data } = await msiteFoodType(geohash)
       let resLength = data.length

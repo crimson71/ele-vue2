@@ -10,6 +10,8 @@ const state = {
   showLoading:true,
   userInfo: null ,// 用户信息
   geohash:'31.22299,121.36025',//地址地理信息
+  latitude:'', // 当前位置纬度
+  longitude:'',// 当前位置经度
 }
 export default new Vuex.Store({
   state,

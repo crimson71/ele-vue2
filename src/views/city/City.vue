@@ -70,8 +70,7 @@ export default {
     async getPosiSearch (obj) {
       if (this.inputValue) {
         const { data } = await posiSearch(obj)
-        this.placeList = data
-        console.log(this.placeList, 'poisearch')
+        this.placeList = data      
       }
     },
     /**

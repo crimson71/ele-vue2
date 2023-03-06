@@ -9,8 +9,8 @@
       <span class="login-span">登陆 | 注册</span>
 
     </router-link>
-    <section v-if="headTitle" class="title-header ellipsis">
-      <span >{{headTitle}}</span>
+    <section v-if="headTitle" class="title-header ">
+      <span class="ellipsis">{{headTitle}}</span>
     </section>
     <slot name="changeCity"></slot>
     <slot name="msite-title"></slot>
@@ -69,10 +69,13 @@ export default {
     left:50%;
     transform: translateY(-50%) translateX(-50%);
     text-align: center;
+    width: 2rem;
 
     span {
       @include sc(0.8rem, #fff);
       font-weight: bold;
+      position: absolute;
+   
 
     }
 

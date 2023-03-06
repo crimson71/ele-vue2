@@ -7,6 +7,7 @@ const service = axios.create({
   baseURL: baseUrl
 })
 export default function request (options) {
+  
   options.method = options.method || 'GET'
   if (options.method.toUpperCase() === 'GET') {
     // get方法传参
