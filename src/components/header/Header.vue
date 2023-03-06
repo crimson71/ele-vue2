@@ -13,14 +13,21 @@
       <span >{{headTitle}}</span>
     </section>
     <slot name="changeCity"></slot>
+    <slot name="msite-title"></slot>
 
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'HeaderTop',
-  props: ['headTitle', 'goBack', 'changeCity']
+  props: ['headTitle', 'goBack', 'changeCity'],
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  }
 }
 </script>
 

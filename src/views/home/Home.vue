@@ -40,12 +40,14 @@
       </ul>
 
     </section>
+    <loading-vue v-show="showLoading"></loading-vue>
   </div>
 </template>
 
 <script>
 import HeaderTop from '@/components/header/Header.vue'
 import { guessCity } from '@/service/getData.js'
+import store from '@/store'
 
 export default {
   name: 'MyHome',
@@ -57,7 +59,9 @@ export default {
       guessCityId: '',
       guessCity: '',
       hotCity: [],
-      groupCity: {}
+      groupCity: {},
+      showLoading:true
+    
     }
   },
   mounted () {
@@ -68,6 +72,15 @@ export default {
   methods: {
     async getGuessCity (obj) {
       const { data } = await guessCity(obj)
+      if(data) {
+        store.commit('handleLoading',false)
+        
+
+      }else {
+        store.commit('handleLoading',true)
+       
+      }
+      this.showLoading = store.state.showLoading
       if (obj.type === 'guess') {
         this.guessCityId = data.id
         this.guessCity = data.name

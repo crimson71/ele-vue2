@@ -24,3 +24,14 @@ export const posiSearch = (params) => {
     data: params
   })
 }
+
+// 获取店铺导航分类
+export const msiteFoodType = (geohash) => {
+  return request({
+    method: 'get',
+    url: 'v2/index_entry',
+    geohash,
+    group_type: '1',
+    'flags[]': 'F'
+  })
+}

@@ -6,8 +6,11 @@ import './config/rem.js'
 import './style/comm.scss'
 import './icons/index.js'
 
-Vue.config.productionTip = false
 
+import Loading from './components/common/Loading.vue'
+
+Vue.config.productionTip = false
+Vue.component('LoadingVue',Loading)
 new Vue({
   router,
   store,

@@ -21,7 +21,7 @@
     <!-- 搜索历史 -->
     <header class="search-history" >搜索历史</header>
     <ul class="poisearchul">
-      <li v-for="(item,index) in placeList" :key="index" @click="nextPage">
+      <li v-for="(item,index) in placeList" :key="index" @click="nextPage(index,item.geohash)">
       <h4 class="search-name">{{item.name}}</h4>
       <span class="search-addr">{{item.address}}</span>
       </li>
@@ -31,22 +31,27 @@
 
 <script>
 import HeaderTop from '@/components/header/Header.vue'
+
 import {
   currentCity,
   posiSearch
 } from '@/service/getData.js'
 import { setStorage, getStorage } from '@/config/utils.js'
+
 export default {
   name: 'MyCity',
   components: {
-    HeaderTop
+    HeaderTop,
+    
+    
   },
   data () {
     return {
       currrentCityId: '',
       currentCity: '',
       inputValue: '',
-      placeList: [] // 搜索结果列表
+      placeList: [], // 搜索结果列表
+      placeHistory: []// 搜索历史记录
     }
   },
   mounted () {
@@ -73,8 +78,28 @@ export default {
              * 点击搜索结果进入下一页面时进行判断是否已经有一样的历史记录
              * 如果没有则新增，如果有则不做重复储存，判断完成后进入下一页
              */
-    nextPage () {
-
+    nextPage (index, geohash) {
+      const history = getStorage('placeHistory')
+      const choosePlace = this.placeList[index]
+      if (history) {
+        // 检查是否有重复
+        let checkRepeat = false
+        this.placeHistory = JSON.parse(getStorage('placeHistory'))
+        this.placeHistory.forEach(item => {
+          // 检查历史记录中地址是否重复，有则设checkRepeat为true
+          if (item.geohash === geohash) {
+            checkRepeat = true
+          }
+        }
+        )
+        if (!checkRepeat) {
+          this.placeHistory.push(choosePlace)
+        }
+      } else {
+        this.placeHistory.push(choosePlace)
+      }
+      setStorage('placeHistory', this.placeHistory)
+      this.$router.push({ path: '/msite', query: { geohash } })
     }
 
   }
