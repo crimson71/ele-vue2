@@ -57,11 +57,13 @@ import { mapState } from 'vuex'
 // import { imgBaseUrl } from '@/config';
 import { shopList } from '@/service/getData.js'
 import RatingStar from './RatingStar.vue'
+import { loadMore } from './mixin'
 export default {
   name: 'ShopList',
   components: {
     RatingStar
   },
+  mixins:[loadMore],
   data() {
     return {
       shopList: [], //店铺列表
@@ -113,7 +115,7 @@ export default {
   .shoplist-container {
     .shop-li {
       display: flex;
-      border-bottom: 0.025rem solid grey;
+      border-bottom: 0.025rem solid #f1f1f1;
       padding: 0.7rem 0.4rem;
       .img-left {
         .shop-img {
